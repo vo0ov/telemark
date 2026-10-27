@@ -1,0 +1,29 @@
+name: 🐛 Сообщить об ошибке
+description: Помогите воспроизвести проблему в Telemark.
+title: "[Ошибка]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Что произошло?
+      description: Опишите проблему и ожидаемый результат.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Как воспроизвести?
+      placeholder: "1. Откройте…\n2. Нажмите…\n3. Получите…"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Окружение
+      description: ОС, браузер и версия Telegram, если проблема связана со вставкой.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Дополнительные сведения
+      description: Скриншоты, пример HTML или сообщения об ошибках без личных данных.

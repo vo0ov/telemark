@@ -1,0 +1,21 @@
+name: 💡 Предложить улучшение
+description: Расскажите, какую задачу поможет решить ваша идея.
+title: "[Идея]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую задачу нужно решить?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предлагаемое решение
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Дополнительные сведения
