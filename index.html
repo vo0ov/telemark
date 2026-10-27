@@ -183,6 +183,15 @@
     #status { position: absolute; top: 42px; right: 0; white-space: nowrap; color: #dce9f6; font-size: .8rem; }
     .demo-bold { font-weight: bold; }
     .demo-italic { font-style: italic; }
+    .live-file-bar { display: none; align-items: center; gap: 12px; padding: 8px 14px; background: #192733; border-bottom: 1px solid #30404d; color: #c9d7e2; font-size: 13px; }
+    .live-file-bar span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .live-file-bar button { margin-left: auto; flex: none; border: 0; border-radius: 6px; padding: 7px 10px; background: #2c4355; color: #e3eff7; cursor: pointer; }
+    .workspace.live-mode .editor-panel, .workspace.live-mode .splitter { display: none; }
+    .workspace.live-mode .preview-panel { display: flex; width: 100%; }
+    .workspace.live-mode .live-file-bar { display: flex; }
+    body.live-mode .mobile-tabs { display: none; }
+    body.live-mode .workspace { height: calc(100dvh - 46px); }
+    body.live-mode .menu-bar .insert-top-menu { display: none; }
     .mobile-tabs { display: none; }
     @media (max-width: 900px) {
       .workspace { height: calc(100dvh - 102px); }
@@ -232,8 +241,8 @@
   <header class="app-header">
     <div class="app-logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.6 18.3 20c-.2 1.1-.9 1.3-1.8.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-4.9 9-8.1c.4-.4-.1-.6-.6-.2L6 13.9l-4.7-1.5c-1-.3-1-1 .2-1.4L20 3.8c.9-.3 1.7.2 1.5.8Z"/></svg></div>
     <nav class="menu-bar" aria-label="Меню приложения">
-      <div class="menu"><button type="button" aria-expanded="false">Файл</button><div class="menu-popup" hidden><button type="button" data-action="open">Открыть HTML…</button><button type="button" data-action="save">Сохранить HTML</button><button type="button" data-action="full-reset">Открыть демо…</button><div class="submenu"><button type="button" class="settings-toggle" aria-expanded="false">Настройки</button><div class="submenu-popup" hidden><div class="submenu font-submenu"><button type="button" class="font-toggle" aria-expanded="false">Размер шрифта</button><div class="submenu-popup" hidden><button type="button" data-font-size="12">Маленький</button><button type="button" data-font-size="13">Обычный</button><button type="button" data-font-size="15">Крупный</button><button type="button" data-font-size="17">Очень крупный</button></div></div><button type="button" data-action="split-reset">Сбросить вид панелей</button><button type="button" class="danger-action" data-action="reset-site">Сбросить всё…</button></div></div></div></div>
-      <div class="menu"><button type="button" aria-expanded="false">Вставка</button><div class="menu-popup" id="insert-menu" hidden></div></div>
+      <div class="menu"><button type="button" aria-expanded="false">Файл</button><div class="menu-popup" hidden><button type="button" data-action="open">Открыть HTML…</button><button type="button" data-action="live-open">Открыть файл для предпросмотра…</button><button type="button" data-action="save">Сохранить HTML</button><button type="button" data-action="full-reset">Открыть демо…</button><div class="submenu"><button type="button" class="settings-toggle" aria-expanded="false">Настройки</button><div class="submenu-popup" hidden><div class="submenu font-submenu"><button type="button" class="font-toggle" aria-expanded="false">Размер шрифта</button><div class="submenu-popup" hidden><button type="button" data-font-size="12">Маленький</button><button type="button" data-font-size="13">Обычный</button><button type="button" data-font-size="15">Крупный</button><button type="button" data-font-size="17">Очень крупный</button></div></div><button type="button" data-action="split-reset">Сбросить вид панелей</button><button type="button" class="danger-action" data-action="reset-site">Сбросить всё…</button></div></div></div></div>
+      <div class="menu insert-top-menu"><button type="button" aria-expanded="false">Вставка</button><div class="menu-popup" id="insert-menu" hidden></div></div>
       <div class="menu"><button type="button" aria-expanded="false">Справка</button><div class="menu-popup" hidden><button type="button" data-action="tour">Обучение</button><button type="button" data-action="help">О редакторе</button></div></div>
     </nav>
     <a class="repo-link" href="https://github.com/vo0ov/telemark" target="_blank" rel="noopener noreferrer" aria-label="Репозиторий Telemark на GitHub" title="GitHub"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.53v-2.07c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.7 1.15 1.7 1.15.99 1.7 2.6 1.21 3.24.92.1-.72.39-1.21.71-1.49-2.47-.28-5.07-1.24-5.07-5.49 0-1.21.43-2.2 1.14-2.98-.11-.28-.49-1.41.11-2.94 0 0 .93-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.6 1.53.22 2.66.11 2.94.71.78 1.14 1.77 1.14 2.98 0 4.26-2.6 5.2-5.08 5.48.4.35.75 1.02.75 2.06V22c0 .29.2.64.77.53A11.1 11.1 0 0 0 12 .9Z"/></svg></a>
@@ -281,6 +290,7 @@
     </section>
     <div class="splitter" role="separator" aria-label="Изменить ширину панелей" aria-orientation="vertical" tabindex="0"></div>
     <section class="panel preview-panel" aria-label="Предпросмотр сообщения">
+      <div class="live-file-bar" id="live-file-bar"><span id="live-file-status" role="status"></span><button type="button" id="live-file-close">Вернуться в редактор</button></div>
       <div class="preview-scroll"><div class="message-wrap">
   <div class="empty-preview">Здесь появится предпросмотр сообщения</div>
   <article id="demo">
@@ -460,6 +470,43 @@ pwd</code></pre>
     initial.querySelectorAll('#reset, #copy, #status').forEach(el => el.remove());
     initial.querySelectorAll('tg-map iframe').forEach(el => el.remove());
     const demoSource = initial.innerHTML.replace(/^    /gm, '').trim();
+    let liveHandle = null, liveText = '', liveTimer = null, liveVersion = 0, liveBusy = false;
+    const liveStatus = document.getElementById('live-file-status');
+    function activeSource() { return liveHandle ? liveText : editor.value; }
+    function stopLive() {
+      liveVersion++; clearInterval(liveTimer); liveTimer = null; liveHandle = null; liveText = '';
+      workspaceElement.classList.remove('live-mode'); document.body.classList.remove('live-mode');
+      liveStatus.textContent = ''; selectMobileTab('editor'); render();
+    }
+    async function refreshLive(version) {
+      if (!liveHandle || liveBusy) return;
+      const handle = liveHandle; liveBusy = true;
+      try {
+        const file = await handle.getFile();
+        const content = await file.text();
+        if (version !== liveVersion || handle !== liveHandle) return;
+        liveStatus.textContent = 'Файл: ' + handle.name + ' · обновляется автоматически';
+        if (content !== liveText) { liveText = content; render(); }
+      } catch (error) {
+        if (version === liveVersion && handle === liveHandle) liveStatus.textContent = 'Не удалось прочитать файл. Проверьте доступ или откройте его заново.';
+      } finally { liveBusy = false; }
+    }
+    async function openLive() {
+      if (!window.isSecureContext || typeof window.showOpenFilePicker !== 'function') {
+        await showDialog({ title: 'Предпросмотр файла недоступен', text: 'Для этого режима нужен поддерживающий браузер, например Chrome или Edge, и HTTPS либо localhost. В этом браузере можно открыть HTML обычным способом.', confirm: 'Понятно' }); return;
+      }
+      try {
+        const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: 'HTML', accept: { 'text/html': ['.html', '.htm'] } }] });
+        const file = await handle.getFile(); const content = await file.text();
+        clearInterval(liveTimer); liveHandle = handle; liveText = content; const version = ++liveVersion;
+        workspaceElement.classList.add('live-mode'); document.body.classList.add('live-mode'); selectMobileTab('preview');
+        liveStatus.textContent = 'Файл: ' + handle.name + ' · обновляется автоматически';
+        render(); liveTimer = setInterval(() => refreshLive(version), 250);
+      } catch (error) {
+        if (error.name !== 'AbortError') await showDialog({ title: 'Не удалось открыть файл', text: 'Проверьте доступ к файлу и попробуйте снова.', confirm: 'Понятно' });
+      }
+    }
+    document.getElementById('live-file-close').addEventListener('click', stopLive);
     const documentKey = 'telemark-document';
     try { editor.value = localStorage.getItem(documentKey) ?? demoSource; } catch { editor.value = demoSource; }
     const insertGroups = {
@@ -496,8 +543,8 @@ pwd</code></pre>
     const status = controls[2];
 
     function render() {
-      document.querySelector('.message-wrap').classList.toggle('is-empty', !editor.value.trim());
-      const parsed = new DOMParser().parseFromString(editor.value, 'text/html');
+      document.querySelector('.message-wrap').classList.toggle('is-empty', !activeSource().trim());
+      const parsed = new DOMParser().parseFromString(activeSource(), 'text/html');
       parsed.querySelectorAll('script, iframe, object, embed').forEach(el => el.remove());
       parsed.querySelectorAll('*').forEach(el => [...el.attributes].forEach(attr => {
         if (attr.name.toLowerCase().startsWith('on')) el.removeAttribute(attr.name);
@@ -578,9 +625,10 @@ pwd</code></pre>
     document.querySelectorAll('[data-action]').forEach(button => button.addEventListener('click', async () => {
       closeMenus();
       switch (button.dataset.action) {
-        case 'open': document.getElementById('open-file').click(); break;
+        case 'open': if (liveHandle) stopLive(); document.getElementById('open-file').click(); break;
+        case 'live-open': await openLive(); break;
         case 'save': {
-          const url = URL.createObjectURL(new Blob([editor.value], { type: 'text/html;charset=utf-8' }));
+          const url = URL.createObjectURL(new Blob([activeSource()], { type: 'text/html;charset=utf-8' }));
           const link = document.createElement('a'); link.href = url; link.download = 'message.html'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); break;
         }
         case 'select': editor.focus(); editor.select(); break;
@@ -594,7 +642,7 @@ pwd</code></pre>
           panel.style.width = ''; panel.style.height = ''; break;
         case 'full-reset':
           if (!await showDialog({ title: 'Открыть демо?', text: 'Текущий текст будет заменён демонстрацией. Настройки сохранятся.', confirm: 'Открыть', cancel: true })) break;
-          editor.value = demoSource; editor.dispatchEvent(new Event('input'));
+          if (liveHandle) stopLive(); editor.value = demoSource; editor.dispatchEvent(new Event('input'));
           editor.scrollTop = 0; editor.scrollLeft = 0; document.querySelector('.preview-scroll').scrollTop = 0; break;
         case 'tour': startTour(); break;
         case 'help': await showDialog({ title: 'О Telemark', text: 'Редактируйте HTML и смотрите результат в предпросмотре. Перетащите разделитель, чтобы изменить размер панелей. Кнопка копирования добавляет HTML в буфер обмена.', confirm: 'Понятно' }); break;
@@ -616,11 +664,11 @@ pwd</code></pre>
       event.preventDefault(); const start = editor.selectionStart; const end = editor.selectionEnd;
       editor.setRangeText('  ', start, end, 'end'); editor.dispatchEvent(new Event('input'));
     });
-    controls[0].addEventListener('click', () => { demo.querySelectorAll('.revealed').forEach(el => el.classList.remove('revealed')); const original = new DOMParser().parseFromString(editor.value, 'text/html').querySelectorAll('details'); demo.querySelectorAll('details').forEach((el, index) => { el.open = original[index]?.hasAttribute('open') || false; }); status.textContent = ''; });
+    controls[0].addEventListener('click', () => { demo.querySelectorAll('.revealed').forEach(el => el.classList.remove('revealed')); const original = new DOMParser().parseFromString(activeSource(), 'text/html').querySelectorAll('details'); demo.querySelectorAll('details').forEach((el, index) => { el.open = original[index]?.hasAttribute('open') || false; }); status.textContent = ''; });
     copyButton.addEventListener('click', async () => {
       try {
-        const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>.demo-bold{font-weight:bold}.demo-italic{font-style:italic}</style></head><body>' + editor.value + '</body></html>';
-        const plain = new DOMParser().parseFromString(editor.value, 'text/html').body.textContent;
+        const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>.demo-bold{font-weight:bold}.demo-italic{font-style:italic}</style></head><body>' + activeSource() + '</body></html>';
+        const plain = new DOMParser().parseFromString(activeSource(), 'text/html').body.textContent;
         await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([plain], { type: 'text/plain' }) })]);
         status.textContent = ''; copyButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4L19 6"></path></svg>';
         clearTimeout(copyButton.resetIconTimer); copyButton.resetIconTimer = setTimeout(() => { copyButton.innerHTML = copyIcon; }, 1500);
